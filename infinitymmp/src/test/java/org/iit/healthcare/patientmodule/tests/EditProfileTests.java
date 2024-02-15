@@ -16,26 +16,19 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class EditProfileTests extends BaseClass{
 	//WebDriver driver;
-	 MMPLib mmpLib;
+	 MMPLib mmpLib = new MMPLib(driver);
 	/**
 	 * 
 	 * Validate LastName with valid and invalid
 	 * Validate License - 8 Digit Random 
 	 * 
 	 */
-	
-	@BeforeClass
-	public void instantiateDriver()
-	{
-		//WebDriverManager.chromedriver().setup();
-	   // driver = new ChromeDriver();
-	    mmpLib = new MMPLib(driver);
-	}
+
 	@Test
 	public void validateEditProfileTest()
 	{
-	     
-	    mmpLib.login(mmpProp.getProperty("patientusername"),mmpProp.getProperty("patientpassword"));
+		 
+	    mmpLib.loginValidUser(mmpProp.getProperty("patientusername"),mmpProp.getProperty("patientpassword"));
 		boolean result = editFirstName();
 		Assert.assertTrue(result);
 	}
@@ -44,16 +37,14 @@ public class EditProfileTests extends BaseClass{
 	{
 		 
 	    
-		  mmpLib.login(mmpProp.getProperty("patientusername"),mmpProp.getProperty("patientpassword"));
+	    mmpLib.loginValidUser(mmpProp.getProperty("patientusername"),mmpProp.getProperty("patientpassword"));
 		boolean result = editFirstName_withInvalidData();
 		Assert.assertTrue(result);
 	}
 	@Test
 	public void validateEditProfileFiels_NonEditable()
 	{
-		 
-	    
-		  mmpLib.login(mmpProp.getProperty("patientusername"),mmpProp.getProperty("patientpassword"));
+		  mmpLib.loginValidUser(mmpProp.getProperty("patientusername"),mmpProp.getProperty("patientpassword"));
 		boolean result = editProfile_nonEditableFields();
 		Assert.assertTrue(result);
 	}
