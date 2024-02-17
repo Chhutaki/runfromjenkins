@@ -20,7 +20,7 @@ public class ScheduleAppointmentTests extends BaseClass{
 	public void bookAppointment()
 	{
 		HashMap<String,String> expectedHMap = new HashMap<String,String>();
-		HashMap<String,String> actualHMap = new HashMap<String,String>();
+	//	HashMap<String,String> actualHMap = new HashMap<String,String>();
 		
 	 
 		driver.get(mmpProp.getProperty("patienturl"));
@@ -51,11 +51,21 @@ public class ScheduleAppointmentTests extends BaseClass{
 		String expectedYear = dateArr[2];
 		String actualYear = driver.findElement(By.xpath("//span[@class='ui-datepicker-year']")).getText();
 		
-		while(actualYear!=expectedYear)
+		while(!(actualYear.equals(expectedYear)))
 		{
-			
+			driver.findElement(By.xpath("//span[text()='Next']")).click();
+			actualYear = driver.findElement(By.xpath("//span[@class='ui-datepicker-year']")).getText();
 		}
-		
+		String expectedMonth = dateArr[1];//April
+		String actualMonth = driver.findElement(By.xpath("//span[@class='ui-datepicker-month']")).getText();//January
+
+		while(!(actualMonth.equals(expectedMonth)))
+		{
+			driver.findElement(By.xpath("//span[text()='Next']")).click();
+			actualMonth = driver.findElement(By.xpath("//span[@class='ui-datepicker-month']")).getText();
+		}
+
+		driver.findElement(By.linkText(dateArr[0])).click();
 		
 		expectedHMap.put("date",driver.findElement(By.id("datepicker")).getAttribute("value"));
 		
@@ -63,8 +73,6 @@ public class ScheduleAppointmentTests extends BaseClass{
 		String appointmentTime="11Am";
 		timeSelect.selectByVisibleText(appointmentTime);
 		expectedHMap.put("time", appointmentTime);
-		
-		
 		
 		driver.findElement(By.xpath("//button[@id='ChangeHeatName']")).click();
 		driver.switchTo().defaultContent();
@@ -74,10 +82,6 @@ public class ScheduleAppointmentTests extends BaseClass{
 		driver.findElement(By.id("sym")).sendKeys(symp);
 		driver.findElement(By.xpath("//input[@value='Submit']")).click();
 		System.out.println("Expected HMAP" + expectedHMap);
-		
-		
-		
-		
 	
 	}
 	public static String getFutureDate(int noofDays)

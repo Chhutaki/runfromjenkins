@@ -18,8 +18,6 @@ public class ScheduleAppointmentDatePicker_Tests extends BaseClass{
 	@Test
 	public void scheduleAppointmentTest(String username,String password)
 	{
-	 
-		
 	    MMPLib mmpLib = new MMPLib(driver);
 	    mmpLib.launchBrowser(mmpProp.getProperty("patienturl"));
 	    HomePage hPage = mmpLib.loginValidUser(username, password);
